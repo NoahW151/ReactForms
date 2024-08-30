@@ -9,14 +9,20 @@ export default function SignUpForm({token, setToken})
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const data = {username: username, password: password}
-      const options = {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)}
-      const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", options).then(res => res.json());
-      console.log(response);
-      setToken(response.token);
-    } catch (error) {
-      setError(error.message);
+    if (password.length > 8) {
+      try {
+        const data = {username: username, password: password}
+        const options = {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)}
+        const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", options).then(res => res.json());
+        console.log(response);
+        setToken(response.token);
+      } catch (error) {
+        setError(error.message);
+      }
+    }
+    else
+    {
+      setError("Password must be greater than 8 characters");
     }
   }
 
